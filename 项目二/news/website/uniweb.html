@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="admin/css/insititution.css">
+    <script type="text/html" id="webnameTemp">
+        <li class="list-group-item newname">
+        </li>
+        {{each webname v}}
+        <li class="list-group-item">
+            <h4><a href="#">{{v.title}}</a></h4>
+            <img src="admin/images/{{v.imgurl}}" alt="" class="institution-img">
+            <div class="institution-text">
+                <p>{{#v.content}}</p>
+                <p><span class="glyphicon glyphicon-calendar" ></span>{{v.updata}}</p>
+            </div>
+        </li>
+        {{/each}}
+        <li class="list-group-item">
+            <nav aria-label="Page navigation ">
+                <ul class="pagination">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">上一页</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">下一页</a></li>
+                    <li><a href="#">尾页</a></li>
+                </ul>
+            </nav>
+        </li>
+    </script>
+    <script type="text/javascript" src="admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="admin/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="admin/js/template-web.js"></script>
+    <script type="text/javascript">
+    var searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var webname = searchURL.split("&")[0].split("=")[1];
+
+    $(function() {
+
+        $.ajax({
+            url: "uniweb.php",
+            type: "post",
+            data: {
+                "webname": webname
+            },
+            dataType: "json",
+            success: function(data) {
+                 data.webname=data.webname.slice(0,9);
+                var htmlStr = template("webnameTemp", data);
+                $("#webname").html(htmlStr);
+
+                var nameArr = [];
+                nameArr["usertext"] = "街区新闻";
+                nameArr["institution"] = "入驻机构";
+                nameArr["newstreet"] = "街区活动";
+                $("#main .list-group>a").html(nameArr[webname]);
+                $(".newname").html("首页>" + nameArr[webname]);
+
+                if (webname == "newstreet")
+                {
+                    $(".institution-img").hide();
+                }
+                if(webname=="usertext")
+                {
+                    $(".institution-img").css("borderRadius","0px")
+                }
+
+            }
+        })
+        $("#menu li." + webname).addClass("actived");
+        $("#menu li a").hover(function() {
+            $(this).css({
+                "backgroundColor": "red",
+                "color": "white"
+            })
+
+
+        }, function() {
+            if (!$(this).parent().hasClass("actived")) {
+                $(this).css({
+                    "backgroundColor": "#fff",
+                    "color": "#666"
+                });
+            }
+
+        });
+    })
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default  navbar-fixed-top">
+        <div class="container">
+            <div class="row">
+                <div id="navTop" class="col-xs-12 col-sm-3 ">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            <img alt="Brand" src="images/logo.png">
+                        </a>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse" id="navBtn">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse " id="example-navbar-collapse">
+                    <div id="menu">
+                        <ul class="nav nav-pills pull-right ">
+                            <li class=""><a href="website.html">首页</a></li>
+                            <li class="usertext"><a href="uniweb.html?webname=usertext" class="navItem ">街区新闻</a></li>
+                            <li class="institution"><a href="uniweb.html?webname=institution" class="navItem ">入驻机构</a></li>
+                            <li class="newstreet"><a href="uniweb.html?webname=newstreet" class="navItem">街区活动</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12" id="titleTxt">
+                <h3 class="text-center">集聚创业服务   孵化科技企业   孕育创业文化</h3></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" id="main">
+            <div class="col-xs-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                     街区新闻
+                    </a>
+                    <a href="#" class="list-group-item ">
+                    街区新闻
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-9 ">
+                <ul class="list-group" id="webname">
+                </ul>
+                <!--    <nav aria-label="Page navigation ">
+                    <ul class="pagination">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">上一页</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">下一页</a></li>
+                        <li><a href="#">尾页</a></li>
+                       
+                    </ul>
+                </nav> -->
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="nav nav-bar text-center">
+                <span>版权所有：北京海置科创科技服务有限公司 京ICP备14017783号-1 京公网安备11010802017670</span>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>

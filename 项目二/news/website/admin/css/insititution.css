@@ -1,0 +1,118 @@
+html
+{
+	margin:0px;
+	padding:0px;	
+}
+body
+{
+	
+	padding-top:60px;
+	padding-bottom:40px;
+}
+
+.container-fluid
+{
+	padding:0px;
+}
+.navbar-header
+{
+	/* width: 100%; */
+}
+.newText
+{
+	margin-top:20px;
+	padding:15px;
+}
+.navbar-header .navbar-brand
+{
+	padding:0px;
+	
+}
+
+.navbar-brand img
+{
+	width: auto;
+	vertical-align: middle;
+
+} 
+
+.nav-pills li a.navItem
+{
+	background:#fff;
+	color:#666;
+}
+.nav-pills li.actived a
+{
+	background:red;
+	
+}
+#titleTxt
+{
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	background: url("../images/1.jpg") no-repeat;
+	background-size: 100% 100%;
+
+}
+/*a.actived
+{
+	background:red;
+}*/
+#main
+{
+	margin-top:30px;
+	padding-left: 0px;
+}
+#webname
+{
+	width: 100%;
+}
+#webname li
+{
+	width: 100%;
+}
+.institution-img
+{
+	width: 114px;
+	height: 114px;
+	border: 3px solid #ddd;
+	border-radius: 50%;
+	vertical-align: top;
+}
+.institution-text
+{
+	display: inline-block;
+	margin-left: 10px;
+	width: 80%;
+}
+
+.institution-text p
+{
+	font-size:12px;
+	width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar-fixed-bottom
+{
+	line-height:49px;
+	color:#fff;
+	font-size:12px;
+
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="admin/css/website.css">
+    <style>
+        @media screen and (min-width:975px) { /*当屏幕尺寸小于975px时，应用下面的CSS样式*/
+            .navbar-collapse{ 
+                display: block !important;
+                height: auto !important;
+                padding-bottom: 0;
+                overflow: visible !important
+            }
+        }
+    </style>
+
+    <script type="text/html" id="intituteTemp">
+        <div class="newText"  style="padding:15px;">入驻机构</div>
+        {{each institution v}}
+            <div class="col-xs-12 col-md-4 intitute" >
+                <img src="admin/images/{{v.imgurl}}" alt="" class="intituteImg ">
+                <div class="intitute-text">
+                    <h4><a href="#">{{v.title}}</a></h4>
+                    <p>{{v.content}}</p>
+                </div>
+            </div>
+        {{/each}}
+    </script>
+
+    <script type="text/javascript" src="admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="admin/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="admin/js/website.js"></script>
+    <script type="text/javascript" src="admin/js/template-web.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $.ajax({
+                url: "website.php",
+                type: "post",
+                // data:{"size","9"},
+                dataType: "json",
+                success: function(data) {
+                    $("#new-img").attr("src", "admin/images/" + data.news[0].imgurl);
+                    $("#new-title").html(data.news[0].title);
+                    $("#new-content").html(data.news[0].content);
+                    console.log(data);
+                    data.institution = data.institution.slice(0, 9);
+                    var htmlStr = template("intituteTemp", data);
+                    $("#intitute").html(htmlStr);
+                    screenShow();
+                }
+            })
+
+            function screenShow() {
+                if ($(window).width() < 1100) {
+                    $(".intitute").hide();
+                    for (var i = 0; i < 3; i++) {
+                        $(".intitute").eq(i).show();
+                    }
+                } else {
+                    $(".intitute").show();
+                }
+            }
+
+            $(window).resize(function() {
+                screenShow();
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default  navbar-fixed-top">
+        <div class="container">
+            <div class="row">
+                <div id="navTop" class="col-xs-12 col-sm-3 ">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            <img alt="Brand" src="images/logo.png">
+                        </a>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse" id="navBtn">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse " id="example-navbar-collapse">
+                    <div  id="menu">
+                        <ul class="nav nav-pills pull-right ">
+                            <li class="active"><a href="#">首页</a></li>
+                            <li><a href="uniweb.html?webname=usertext" class="navItem">街区新闻</a></li>
+                            <li><a href="uniweb.html?webname=institution" class="navItem">入驻机构</a></li>
+                            <li><a href="uniweb.html?webname=newstreet" class="navItem">街区活动</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="slidershow" class="carousel slide" data-ride="carousel"  data-interval="2000">
+                    <!-- 设置图片轮播的顺序 -->
+                    <ol class="carousel-indicators">
+                        <li class="active" data-target="#slidershow" data-slide-to="0"></li>
+                        <li data-target="#slidershow" data-slide-to="1"></li>
+                        <li data-target="#slidershow" data-slide-to="2"></li>
+                        <li data-target="#slidershow" data-slide-to="3"></li>
+                    </ol>
+                    <!-- 设置轮播图片 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <a href="##"> <img src="images/banner_n_07.jpg"></a>
+                        </div>
+                        <div class="item">
+                            <a href="##"><img src="images/banner_n_07s.jpg"></a>
+                        </div>
+                        <div class="item">
+                            <a href="##"> <img src="images/banner_10.jpg" a></a>
+                        </div>
+                        <div class="item">
+                            <a href="##"> <img src="images/banner_12.jpg"></a>
+                        </div>
+                    </div>
+                    <!-- 设置轮播图片控制器 -->
+                    <a class="left carousel-control" href="#slidershow" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#slidershow" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container ">
+        <div class="row"  >
+            <div class="newText" style="padding:15px;">社区新闻</div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="new-left">
+                    <img src="images/bng5.jpg" alt="" id="new-img">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6" id="newactive">
+                <div class="new-right" id="news">
+                    <h4 id="new-title"></h4> 
+                    <p id="new-content"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="intitute">
+            
+        </div> 
+        <div class="row">
+            <div class="newText"  style="padding:15px;">街区生活</div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="activeImg-left">
+                    <img src="images/bng1.png" alt=""  class="left-animation">
+                    <div class="new-info"  style="padding-top: 100px">
+                        <p style="font-size: 26px;color:#fff">中关村创业大街首届手机摄影大赛报名啦！</p>
+                        <p style="font-size: 12px;color:gray">活动时间：2016-11-21</p>
+                        <p style="font-size: 12px;color:gray">活动地点：中关村创业大街</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="activeImg-right ">
+                    <div class="activeImg-top">
+                        <img src="images/bng2.png" alt=""  class="left-animation">
+                        <div class="new-info" style="padding-top: 35px">
+                            <p style="font-size: 18px;color:#fff">招聘|注册、孵化、资讯---创业会客厅线上平台需要在创新创业道...</p>
+                            <p style="font-size: 12px;color:gray">活动时间：2016-07-07</p>
+                            <p style="font-size: 12px;color:gray">活动地点：中关村创业大街</p>
+                        </div>
+                    </div>
+                    <div class="activeImg-bottom">
+                        <div class="bottom-box">
+                            <img src="images/bng3.png" alt="" class="left-animation">
+                            <div class="new-info" style="padding-top: 35px">
+                                <p style="font-size: 16px;color:#fff">"午间时光"，打开艺术之门</p>
+                                <p style="font-size: 12px;color:gray">时间：2016-11-28</p>
+                                <p style="font-size: 12px;color:gray">地点：中关村创业大街</p>
+                            </div>
+                        </div>
+                        <div class="bottom-box"> 
+                        	<img src="images/bng4.png" alt=""  class="left-animation">
+                            <div class="new-info" style="padding-top: 35px">
+                                <p style="font-size: 16px;color:#fff">【创业整理控】那些全球顶尖的...</p>
+                                <p style="font-size: 12px;color:gray">时间：2016-11-24</p>
+                                <p style="font-size: 12px;color:gray">地点：中关村创业大街</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="nav nav-bar text-center">
+                <span>版权所有：北京海置科创科技服务有限公司 京ICP备14017783号-1 京公网安备11010802017670</span>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>
